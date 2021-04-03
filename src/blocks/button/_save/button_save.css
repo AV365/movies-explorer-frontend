@@ -1,0 +1,27 @@
+.button_save {
+  width: 72px;
+  height: 21px;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  border: 0;
+
+  font-family: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 100;
+  line-height: 9px;
+  letter-spacing: 0;
+  text-align: center;
+
+  background-color: #f9f9f9;
+  border-radius: 30px;
+}
+
+@media screen and (max-width: 400px) {
+  .button_save {
+    top: 10px;
+    right: 10px;
+  }
+}

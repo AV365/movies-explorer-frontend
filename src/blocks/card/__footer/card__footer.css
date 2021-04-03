@@ -1,0 +1,19 @@
+.card__footer {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: start;
+  margin: 14px 14px 0 14px;
+}
+
+@media screen and (max-width: 768px) {
+  .card__footer {
+    margin: 25px 0 0 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .card__footer {
+    margin: 16px 0 0 0;
+  }
+}

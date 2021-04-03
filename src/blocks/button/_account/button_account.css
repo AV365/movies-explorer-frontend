@@ -1,0 +1,47 @@
+.button_account {
+  padding-top: 9px;
+  box-sizing: border-box;
+  height: 32px;
+  width: 100px;
+  border-radius: 40px;
+  background: #fff;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.08);
+
+  border: 0;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 12px;
+  letter-spacing: 0;
+  text-align: left;
+  align-self: center;
+  align-items: center;
+
+  padding-left: 11px;
+
+  background-image: url("../../../images/ico_account.svg");
+  background-repeat: no-repeat;
+  background-position: right 3px center;
+}
+
+.button_account:link {
+  text-decoration: none;
+  color: var(--color-content-text);
+}
+.button_account:visited {
+  text-decoration: none;
+  color: var(--color-content-text);
+}
+.button_account:active {
+  text-decoration: none;
+  color: var(--color-content-text);
+}
+.button_account:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 768px){
+  .button_account {
+    display: none;
+  }
+}

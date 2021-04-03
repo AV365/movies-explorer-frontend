@@ -1,0 +1,43 @@
+.menu__link {
+  margin: 0;
+  padding: 0 40px 0 0;
+
+  font-family: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+
+  display: inline;
+
+  color: var(--color-content-bg);
+}
+
+.menu__link:last-child {
+  padding: 0;
+}
+
+.menu__link :link {
+  color: var(--color-content-bg);
+}
+
+.menu__link :visited {
+  color: var(--color-content-bg);
+}
+
+.menu__link :active {
+  color: var(--color-content-bg);
+}
+
+.menu__link :hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 320px) {
+  .menu__link {
+    padding: 0 24px 0 0;
+
+    font-size: 11px;
+    line-height: 16px;
+  }
+}

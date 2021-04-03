@@ -1,0 +1,23 @@
+.form__input {
+  width: 100%;
+
+  margin: 0 0 0 0;
+  padding: 0 0 10px 0;
+
+  font-family: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+
+  border: 0;
+  outline: 0;
+  border-bottom: 1px solid #e8e8e8;
+
+  display: inline;
+}
+
+.form__input:focus {
+
+  border-bottom: 1px solid #3456F3;
+}

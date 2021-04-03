@@ -1,0 +1,31 @@
+.form__input_style_profile {
+  width: 360px;
+
+  font-size: 11px;
+  line-height: 13px;
+  text-align: right;
+  display: inline;
+  border: 0;
+
+  margin: 0;
+  padding: 0 0 16px 50px;
+}
+
+.form__input_style_profile::placeholder {
+  font-size: 11px;
+  line-height: 13px;
+  text-align: right;
+}
+
+.form__input_style_profile:focus {
+  border: 0;
+}
+
+
+
+@media screen and (max-width: 420px) {
+  .form__input_style_profile {
+    width: 210px;
+  }
+
+}

@@ -1,0 +1,15 @@
+.navigation__link_theme_light :link {
+  color: var(--color-content-text);
+}
+
+.navigation__link_theme_light :visited {
+  color: var(--color-content-text);
+}
+
+.navigation__link_theme_light :active {
+  color: var(--color-content-text);
+}
+
+.navigation__link_theme_light :hover {
+  opacity: 0.8;
+}

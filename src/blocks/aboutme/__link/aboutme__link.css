@@ -1,0 +1,37 @@
+.aboutme__link {
+  display: inline-block;
+
+  padding: 0;
+  font-family: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  margin: 0 20px 0 0;
+}
+
+.aboutme__link:last-child {
+  margin: 0;
+}
+
+.aboutme__link :link {
+  text-decoration: none;
+  color: var(--color-content-text);
+}
+.aboutme__link :visited {
+  text-decoration: none;
+  color: var(--color-content-text);
+}
+.aboutme__link :active {
+  text-decoration: none;
+  color: var(--color-content-text);
+}
+.aboutme__link :hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 550px) {
+  .aboutme__link {
+    margin: 0 26px 0 0;
+  }
+}

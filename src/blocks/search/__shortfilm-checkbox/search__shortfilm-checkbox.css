@@ -1,0 +1,13 @@
+.search__shortfilm-checkbox {
+  display: none;
+}
+
+.search__shortfilm-checkbox:checked + .search__shortfilm-slider {
+  background-color: var(--color-content-additional-second);
+}
+
+.search__shortfilm-checkbox:checked + .search__shortfilm-slider:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+}

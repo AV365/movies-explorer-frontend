@@ -1,0 +1,5 @@
+.burger__button_value_off {
+    background-image: url("../../../../images/ico_menu.svg");
+    opacity: 1;
+    z-index: 1;
+}

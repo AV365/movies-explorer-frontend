@@ -1,0 +1,28 @@
+.search__shortfilm-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-content-grey);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 20px;
+}
+
+
+.search__shortfilm-slider:before {
+
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: var(--color-content-bg);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+

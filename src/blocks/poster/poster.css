@@ -1,0 +1,23 @@
+.poster {
+width: 100%;
+    min-width: 320px;
+height: 524px;
+    background-color: var(--color-content-additional);
+    background-image: url("../../images/landing_title_logo.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+    .poster {
+        height: 784px;
+    }
+}
+@media screen and (max-width: 320px) {
+    .poster {
+        height: 570px;
+    }
+}

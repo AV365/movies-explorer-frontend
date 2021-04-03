@@ -1,0 +1,51 @@
+.aboutme__text {
+  font-family: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 14px;
+  line-height: 22px;
+
+  margin: 0 0 99px 0;
+  padding: 0;
+  max-width: 600px;
+}
+
+@media screen and (max-width: 1050px) {
+  .aboutme__text {
+    max-width: 450px;
+    margin: 0 0 55px 0;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .aboutme__text {
+    max-width: 340px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .aboutme__text {
+    margin: 0 0 69px 0;
+    max-width: 350px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .aboutme__text {
+    max-width: 250px;
+  }
+}
+
+
+@media screen and (max-width: 550px) {
+  .aboutme__text {
+    width: 100%;
+    max-width: none;
+    margin: 0 0 40px 0;
+
+    font-size: 11px;
+    line-height: 16px;
+  }
+}

@@ -1,0 +1,13 @@
+.button_account-mobile {
+  position: absolute;
+  display: inline-block;
+  bottom: 90px;
+  right: 210px;
+}
+
+@media screen and (max-width: 420px){
+    .button_account-mobile {
+        bottom: 46px;
+        left: calc(50% - 50px);
+    }
+}

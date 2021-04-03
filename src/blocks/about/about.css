@@ -1,0 +1,25 @@
+.about {
+  max-width: 1280px;
+  min-width: 320px;
+  margin: 0 auto;
+  padding: 110px 70px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 768px) {
+  .about {
+    padding: 90px 50px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .about {
+    padding: 90px 30px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .about {
+    padding: 70px 18px;
+  }
+}

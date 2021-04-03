@@ -1,0 +1,21 @@
+.about__content {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  padding: 70px 0 110px 0;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+  .about__content {
+    padding: 70px 0 93px 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .about__content {
+    padding: 60px 0;
+    flex-direction: column;
+  }
+}

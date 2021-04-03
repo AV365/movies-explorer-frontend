@@ -1,0 +1,17 @@
+.navigation__links_type_home {
+  margin: 0 0 0 0;
+  color: var(--color-content-bg);
+  display: inline;
+}
+
+@media screen and (max-width: 320px) {
+  .navigation__links_type_home {
+    margin: 0 0 0 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .navigation__links_type_home {
+    visibility: visible;
+  }
+}

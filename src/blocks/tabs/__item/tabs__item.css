@@ -1,0 +1,31 @@
+.tabs__item {
+  display: inline-block;
+    position: relative;
+  width: 90px;
+  height: 60px;
+
+  font-family: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  letter-spacing: -0.04em;
+
+  background: #e8e8e8;
+  border-radius: 10px;
+
+  padding: 21px 0 0 0;
+  box-sizing: border-box;
+  margin: 0;
+
+
+}
+
+@media screen and (max-width: 840px) {
+    .tabs__item {
+        width: 84px;
+        height: 57px;
+    }
+}
+

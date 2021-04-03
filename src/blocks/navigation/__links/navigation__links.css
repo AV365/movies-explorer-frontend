@@ -1,0 +1,11 @@
+.navigation_links {
+  margin: 0 0 0 44px;
+  padding: 0;
+  list-style: none;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation_links {
+    visibility: hidden;
+  }
+}

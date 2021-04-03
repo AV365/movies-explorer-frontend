@@ -1,0 +1,22 @@
+.portfolio__header {
+
+    font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 18px;
+    line-height: 20px;
+
+    width: 250px;
+    padding: 0;
+    margin: 0 0 50px 0;
+
+    color: var(--color-content-grey);
+}
+
+
+@media screen and (max-width: 550px){
+    .portfolio__header {
+        margin: 0 0 40px 0;
+
+    }
+}

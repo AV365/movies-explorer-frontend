@@ -1,0 +1,22 @@
+.aboutme__name {
+  font-family: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 50px;
+  line-height: 58px;
+  /* identical to box height, or 116% */
+
+  letter-spacing: -0.04em;
+  padding: 0;
+  margin: 66px 0 18px 0;
+}
+
+@media screen and (max-width: 550px) {
+  .aboutme__name {
+    margin: 40px 0 20px 0;
+
+    font-size: 30px;
+    line-height: 36px;
+  }
+}
+
