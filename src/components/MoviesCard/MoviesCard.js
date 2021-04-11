@@ -26,7 +26,7 @@ function MoviesCard({
   return (
     <>
       <li className="card">
-        <a href={movie.trailerLink} target="_blank">
+        <a href={!isSavedMovies ? movie.trailerLink : movie.trailer} target="_blank">
           <img
             src={
               !isSavedMovies && movie.image && movie.image.url

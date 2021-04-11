@@ -59,13 +59,14 @@ class MainApi {
 
   //Забираем все карточки
   getMovies() {
-    // console.log("Забираем карточки");
+
     return fetch(`${this.url + "movies/"}`, { headers: this.headers })
       .then((res) => {
         if (res.ok) return res.json();
         return Promise.reject(`Ошибка получения карточек: ${res.status}`);
       })
       .then((result) => {
+
         return result;
       })
      .catch((err) => this._displayErr(err));

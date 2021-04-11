@@ -1,7 +1,3 @@
-//todo - коммит
-//todo - поставить логику с сохраненными фильмами только по владельцу
-//todo - еще раз проверить по чеклисту
-//todo деплой и пул реквест
 
 import React from "react";
 
@@ -69,8 +65,11 @@ function App() {
   const [userData, setUserData] = useState({
     name: "",
     email: "",
+    _id: "",
   });
   const [currentUser, setCurrentUser] = useState(false);
+
+  const [permissionsChecked, setPermissionsChecked] = useState(false);
 
   //фильмы
   const [movies, setMovies] = useState([]);
@@ -82,6 +81,16 @@ function App() {
   const [moviesQueryFilter, setMoviesQueryFilter] = useState("");
   const [moviesShortFilter, setMoviesShortFilter] = useState(false);
   const [moviesResultMessage, setMoviesResultMessage] = useState("");
+
+  function showPopup(
+    setOpen,
+    isOk,
+    message = "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
+  ) {
+    setIsInfotooltipOpened(setOpen);
+    setInfotooltipStatus(isOk);
+    setInfotooltipMessage(message);
+  }
 
   //выдача карточек
   const [numCardsInRow, setNumCardsInRow] = useState(
@@ -100,59 +109,56 @@ function App() {
 
   function handleSignout() {
     localStorage.removeItem("jwt");
+    localStorage.removeItem('saved-movies');
     setLoggedIn(false);
 
     history.push("/");
   }
 
   function getUser() {
-    trackPromise(
-      mainapi
-        .getUserInfo()
-        .then((data) => {
-          setCurrentUser(data);
-          const setLoggedInNow = () => {
-            setLoggedIn(true);
-          };
-          setLoggedInNow();
-        })
-        .catch((err) => {
-          //        alert("Error:" + err);
-        })
-    );
+    return mainapi
+      .getUserInfo()
+      .then((data) => {
+        setCurrentUser(data);
+        setLoggedIn(true);
+        return data;
+      })
+      .catch((err) => {
+        alert("Error:" + err);
+      });
   }
 
   function checkToken() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       if (localStorage.getItem("jwt")) {
         let jwt = localStorage.getItem("jwt");
-        trackPromise(
-          auth.getContent(jwt).then((res) => {
+        auth
+          .getContent(jwt)
+          .then((res) => {
             if (res.email) {
-              // const setLoggedInNow = () => {
-              //   setLoggedIn(true);
-              // };
-              // setLoggedInNow();
-              setLoggedIn(() => {
-                return true;
-              });
+              setLoggedIn(true);
               setUserData({
                 email: res.email,
                 name: res.name,
+                _id: res._id,
               });
               resolve("Все ок");
             }
           })
-        );
+          .catch(() => {
+            reject("error");
+          });
+      } else {
+        reject("Нет токена");
       }
     });
   }
 
   function handleRegister(name, email, password) {
+
     return auth
       .register(name, email, password)
       .then((res) => {
-        //console.log(res);
         if (
           !res ||
           res.status === 400 ||
@@ -164,11 +170,16 @@ function App() {
           throw new Error("Что-то пошло не так!");
         }
         if (res.ok) {
+          //          console.log("Что идет на вход", name, password);
           //          console.log(res);
-          history.push("/movies");
+          handleLogin(email, password)
+            .then(() => {})
+            .catch((err) => {
+              showPopup(true, false, err);
+            });
+          //          history.push("/movies");
         }
       })
-
       .catch((err) => {
         return Promise.reject(err);
       });
@@ -186,6 +197,7 @@ function App() {
       })
       .then((res) => {
         setLoggedIn(true);
+
         localStorage.setItem("jwt", res.token);
         checkToken().then(() => {
           history.push("/movies");
@@ -193,6 +205,9 @@ function App() {
       })
       .catch(() => {
         return Promise.reject("ошибка");
+      })
+      .finally(() => {
+        setPermissionsChecked(true);
       });
   }
 
@@ -200,15 +215,11 @@ function App() {
     return mainapi
       .updateUserInfo(name, email)
       .then((res) => {
+        showPopup(true, true, "Данные о пользователе успешно изменены");
         setCurrentUser(res.data);
-        setIsInfotooltipOpened(true);
-        setInfotooltipStatus(true);
-        setInfotooltipMessage("Данные о пользователе успешно изменены");
       })
       .catch((err) => {
-        setIsInfotooltipOpened(true);
-        setInfotooltipStatus(false);
-        setInfotooltipMessage("Что-то пошло не так, но не сдавайтесь!");
+        showPopup(true, false, "Что-то пошло не так, но не сдавайтесь!");
       });
   }
 
@@ -229,6 +240,7 @@ function App() {
     nameRU,
     nameEN,
   }) => {
+    trackPromise(
     mainapi
       .saveMovie(
         country,
@@ -248,9 +260,11 @@ function App() {
         // setCards([newCard.data, ...cards]);
         // closeAllPopups();
 
-        getSavedMovies(true);
+        getSavedMoviesPromise(true);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        showPopup(true, false);
+      }));
   };
 
   //Задержка для ресайза
@@ -282,11 +296,7 @@ function App() {
           setMovies(movies);
         })
         .catch((err) => {
-          setIsInfotooltipOpened(true);
-          setInfotooltipStatus(false);
-          setInfotooltipMessage(
-            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
-          );
+          showPopup(true, false);
         });
     } else {
       // Берем данные из локального хранилища
@@ -295,76 +305,82 @@ function App() {
     }
   }
 
-  function getSavedMovies(force = false) {
-    if (!isLocalMovies("saved-movies") || force) {
-      mainapi
-        .getMovies()
-        .then((data) => {
-          localStorage.setItem("saved-movies", JSON.stringify(data));
-          //_log("выполняем запрос к серверу фильмов");
-          const movies = data.map((item) => {
-            return item;
-          });
-
-          setSavedMovies(() => {
-            return movies;
-          });
-        })
-        .catch((err) => {
-          setIsInfotooltipOpened(true);
-          setInfotooltipStatus(false);
-          setInfotooltipMessage(
-            "!!!!Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
-          );
-
-          //alert(`Ошибка ${err}`);
-        });
-    } else {
-      // Берем данные из локального хранилища
-
-      const moviesLocalStorage = JSON.parse(
-        localStorage.getItem("saved-movies")
-      );
-      //      console.log("local storage saved-movies", moviesLocalStorage);
-      setSavedMovies(() => {
-        return moviesLocalStorage;
-      });
-    }
-  }
+  // function getSavedMovies(force = false) {
+  //   if (!isLocalMovies("saved-movies") || force) {
+  //     mainapi
+  //       .getMovies()
+  //       .then((data) => {
+  //         localStorage.setItem("saved-movies", JSON.stringify(data));
+  //         //_log("выполняем запрос к серверу фильмов");
+  //         const movies = data.map((item) => {
+  //           return item;
+  //         });
+  //
+  //         setSavedMovies(() => {
+  //           return movies;
+  //         });
+  //       })
+  //       .catch((err) => {
+  //         setIsInfotooltipOpened(true);
+  //         setInfotooltipStatus(false);
+  //         setInfotooltipMessage(
+  //           "!!!!Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
+  //         );
+  //
+  //         //alert(`Ошибка ${err}`);
+  //       });
+  //   } else {
+  //     // Берем данные из локального хранилища
+  //
+  //     const moviesLocalStorage = JSON.parse(
+  //       localStorage.getItem("saved-movies")
+  //     );
+  //     //      console.log("local storage saved-movies", moviesLocalStorage);
+  //     setSavedMovies(() => {
+  //       return moviesLocalStorage;
+  //     });
+  //   }
+  // }
 
   function getSavedMoviesPromise(force = false) {
     return new Promise((resolve, reject) => {
-      //!isLocalMovies("saved-movies")
-      if (force) {
+      if (force || !isLocalMovies("saved-movies")) {
         return mainapi
           .getMovies()
           .then((data) => {
             localStorage.setItem("saved-movies", JSON.stringify(data));
-            //_log("выполняем запрос к серверу фильмов");
-            const movies = data.map((item) => {
-              return item;
-            });
+            getUser()
+              .then((data) => {
+                return data._id;
+              })
+              .catch((err) => {})
+              .then((dataUser) => {
+                const res = data.map((item) => {
+                  if (item.owner === dataUser) {
+                    return item;
+                  }
+                });
 
-            resolve(movies);
+                resolve(res);
+              })
+              .catch((err) => {});
           })
+          .then((res) => {})
           .catch((err) => {
-            setIsInfotooltipOpened(true);
-            setInfotooltipStatus(false);
-            setInfotooltipMessage(
-              "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
-            );
-          });
-      } else if (isLocalMovies("saved-movies")) {
+            showPopup(true, false);
+          })
+          .then((res) => {});
+      }
+      if (isLocalMovies("saved-movies")) {
         // Берем данные из локального хранилища
-
         const moviesLocalStorage = JSON.parse(
           localStorage.getItem("saved-movies")
         );
 
         resolve(moviesLocalStorage);
-      } else {
-        reject("error");
       }
+
+      reject("error");
     });
   }
 
@@ -376,19 +392,24 @@ function App() {
   }
 
   function isSavedMovie(movieId) {
-    const moviesLocalStorage = JSON.parse(localStorage.getItem("saved-movies"));
+    if (localStorage.getItem("saved-movies") != "undefined") {
+      const moviesLocalStorage = JSON.parse(
+        localStorage.getItem("saved-movies")
+      );
 
-    let finded = 0;
-    moviesLocalStorage.forEach((i) => {
-      //      console.log("iiii", i._id);
-      if (i.movieId === movieId) {
-        finded = i._id;
-      }
-    });
+      let finded = 0;
+      moviesLocalStorage.forEach((i) => {
+        //      console.log("iiii", i._id);
+        if (i.movieId === movieId) {
+          finded = i._id;
+        }
+      });
 
-    return finded;
+      return finded;
+    } else {
+      return 0;
+    }
   }
-
   function deleteMovieFromSaved(id) {
     if (id) {
       return mainapi
@@ -397,9 +418,7 @@ function App() {
           //            getSavedMovies(true);
           getSavedMoviesPromise(true)
             .then((res) => {
-              setSavedMovies(() => {
-                return res;
-              });
+              setSavedMovies(res);
               renderMoviesWithFilterPromise(
                 res,
                 " ",
@@ -415,18 +434,12 @@ function App() {
               });
             })
             .catch((err) => {
-              //                console.log(err);
+              //console.log("Ошибка" + err);
             })
             .finally((res) => {});
         })
         .catch((err) => {
-          setIsInfotooltipOpened(true);
-          setInfotooltipStatus(false);
-          setInfotooltipMessage(
-            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
-          );
-
-          //alert(`Ошибка ${err}`);
+          showPopup(true, false);
         });
     }
   }
@@ -471,19 +484,19 @@ function App() {
       if (source === "beatfilms" && query && query.length >= 2) {
         const res = filterMovies(array, query.trim(), shortFilm);
 
-        resolve(res);
         res.length === 0
           ? setMoviesResultMessage("Ничего не найдено")
           : setMoviesResultMessage("");
+
+        resolve(res);
       }
       if (source === "savedfilms") {
         const res = filterMovies(array, query || "", shortFilm);
 
-        resolve(res);
-
         res.length === 0
           ? setMoviesResultMessage("Ничего не найдено")
           : setMoviesResultMessage("");
+        resolve(res);
       }
     });
   };
@@ -529,21 +542,7 @@ function App() {
     value ? setMoviesShortFilter(true) : setMoviesShortFilter(false);
   };
 
-  useEffect(() => {
-    getSavedMoviesPromise()
-      .then((res) => {
-        setSavedMovies(() => {
-          return res;
-        });
-        renderMoviesWithFilter(
-          res,
-          moviesQueryFilter,
-          moviesShortFilter,
-          "savedfilms"
-        );
-      })
-      .catch((err) => {});
-  }, []);
+  useEffect(() => {}, []);
 
   useEffect(() => {
     getMovies();
@@ -583,10 +582,32 @@ function App() {
   }, [moviesShortFilter]);
 
   useEffect(() => {
-    checkToken().then(() => {
-      getUser();
-    });
+    checkToken()
+      .then(() => {
+        getUser().then(() => {
+          getSavedMoviesPromise()
+            .then((res) => {
+              setSavedMovies(res);
+              renderMoviesWithFilter(
+                res,
+                moviesQueryFilter,
+                moviesShortFilter,
+                "savedfilms"
+              );
+            })
+            .catch((err) => {});
+        });
+      })
+      .catch(() => {})
+      .finally(() => {
+        //        console.log("set permission");
+        setPermissionsChecked(true);
+      });
   }, [loggedIn]);
+
+  if (!permissionsChecked) {
+    return null;
+  }
 
   return (
     <>
@@ -600,52 +621,50 @@ function App() {
           onInfotooltipClose={onInfotooltipClose}
         />
         <Switch>
-          {loggedIn && (
-            <ProtectedRoute
-              path="/profile"
-              loggedIn={loggedIn}
-              component={Profile}
-              onUpdateProfile={handleUpdateUser}
-              onSignout={handleSignout}
-            />
-          )}
-          {loggedIn && (
-            <ProtectedRoute
-              component={Movies}
-              exact
-              path="/movies"
-              loggedIn={loggedIn}
-              handleSearchFilm={handleSearchFilm}
-              moviesRender={moviesRender}
-              numCardsInRow={numCardsInRow}
-              moviesResultMessage={moviesResultMessage}
-              handleSaveMovie={handleSaveMovie}
-              isSavedMovie={isSavedMovie}
-              deleteMovieFromSaved={deleteMovieFromSaved}
-              handleFilterShortFilm={handleFilterShortFilm}
-            />
-          )}
-          {loggedIn && (
-            <ProtectedRoute
-              component={SavedMovies}
-              path="/saved-movies"
-              loggedIn={loggedIn}
-              handleSearchFilm={handleSearchSavedFilm}
-              moviesRender={moviesSavedRender}
-              numCardsInRow={numCardsInRow}
-              moviesResultMessage={moviesResultMessage}
-              handleSaveMovie={handleSaveMovie}
-              isSavedMovie={isSavedMovie}
-              deleteMovieFromSaved={deleteMovieFromSaved}
-              handleFilterShortFilm={handleFilterShortFilm}
-            />
-          )}
-          {
-            <Route exact path="/">
-              {/*{loggedIn ? <Redirect to="/movies" /> : <LandingPage />}*/}
-              <LandingPage />
-            </Route>
-          }
+          {/*{loggedIn && (*/}
+          <ProtectedRoute
+            path="/profile"
+            loggedIn={loggedIn}
+            component={Profile}
+            onUpdateProfile={handleUpdateUser}
+            onSignout={handleSignout}
+          />
+          // )}
+          {/*{loggedIn && (*/}
+          <ProtectedRoute
+            component={Movies}
+            exact
+            path="/movies"
+            loggedIn={loggedIn}
+            handleSearchFilm={handleSearchFilm}
+            moviesRender={moviesRender}
+            numCardsInRow={numCardsInRow}
+            moviesResultMessage={moviesResultMessage}
+            handleSaveMovie={handleSaveMovie}
+            isSavedMovie={isSavedMovie}
+            deleteMovieFromSaved={deleteMovieFromSaved}
+            handleFilterShortFilm={handleFilterShortFilm}
+          />
+          {/*)}*/}
+          {/*{loggedIn && (*/}
+          <ProtectedRoute
+            component={SavedMovies}
+            path="/saved-movies"
+            loggedIn={loggedIn}
+            handleSearchFilm={handleSearchSavedFilm}
+            moviesRender={moviesSavedRender}
+            numCardsInRow={numCardsInRow}
+            moviesResultMessage={moviesResultMessage}
+            handleSaveMovie={handleSaveMovie}
+            isSavedMovie={isSavedMovie}
+            deleteMovieFromSaved={deleteMovieFromSaved}
+            handleFilterShortFilm={handleFilterShortFilm}
+          />
+          {/*)}*/}
+          <Route exact path="/">
+            {/*{loggedIn ? <Redirect to="/movies" /> : <LandingPage />}*/}
+            <LandingPage />
+          </Route>
           <Route exact path="/signin">
             {loggedIn ? (
               <Redirect to="/movies" />
@@ -663,7 +682,7 @@ function App() {
               />
             )}
           </Route>
-          <Route exact path="/">
+          <Route path="/">
             <NotFound />
           </Route>
           {/*{loggedIn ? <Redirect to="/movies" /> : <Redirect to="/signin" />}*/}

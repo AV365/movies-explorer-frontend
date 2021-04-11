@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import HeaderAuthorized from "../HeaderAuthorized/HeaderAuthorized";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import Main from "../Main/Main";
+import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 
 function SavedMovies({
   handleSearchFilm,
@@ -16,6 +17,7 @@ function SavedMovies({
   handleFilterShortFilm,
   savedMovies,
 }) {
+    const currentUser = useContext(CurrentUserContext);
 
     return (
       <>
