@@ -26,6 +26,11 @@ text-decoration: none;
 
 }
 
+.footernav__links-item :focus {
+    outline: 0;
+
+}
+
 .footernav__links-item:last-child {
 
     margin: 0;

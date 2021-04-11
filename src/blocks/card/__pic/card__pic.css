@@ -6,6 +6,10 @@
   object-fit: cover;
 }
 
+.card__pic:hover {
+  opacity: 0.8;
+}
+
 @media screen and (max-width: 890px) {
   .card__pic {
     width: 339px;
@@ -13,7 +17,7 @@
   }
 }
 
- @media screen and (max-width: 400px) {
+@media screen and (max-width: 400px) {
   .card__pic {
     width: 300px;
     height: 168px;

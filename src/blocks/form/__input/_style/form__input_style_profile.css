@@ -19,6 +19,7 @@
 
 .form__input_style_profile:focus {
   border: 0;
+  background-color: white;
 }
 
 

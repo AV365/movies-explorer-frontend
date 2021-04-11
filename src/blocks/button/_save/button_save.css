@@ -19,6 +19,10 @@
   border-radius: 30px;
 }
 
+.button_save:focus {
+  outline: none;
+}
+
 @media screen and (max-width: 400px) {
   .button_save {
     top: 10px;

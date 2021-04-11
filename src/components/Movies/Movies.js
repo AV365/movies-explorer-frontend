@@ -1,10 +1,38 @@
-function Movies(props) {
+import HeaderAuthorized from "../HeaderAuthorized/HeaderAuthorized";
+import SearchForm from "../SearchForm/SearchForm";
+import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import Footer from "../Footer/Footer";
+import Main from "../Main/Main";
+
+function Movies({
+                    handleSearchFilm,
+                    moviesRender,
+                    numCardsInRow,
+                    moviesResultMessage,
+                    handleSaveMovie,
+                    isSavedMovie,
+                    deleteMovieFromSaved,
+                    handleFilterShortFilm,
+                }) {
   return (
-      <>
-          <main className="main">
-              {props.children}
-          </main>
-  </>
+    <>
+      <HeaderAuthorized />
+      <Main>
+          <SearchForm
+              handleSearchFilm={handleSearchFilm}
+              handleFilterShortFilm={handleFilterShortFilm}
+          />
+          <MoviesCardList
+              movies={moviesRender}
+              showSettings={numCardsInRow}
+              moviesResultMessage={moviesResultMessage}
+              onSaveMovie={handleSaveMovie}
+              isSavedMovie={isSavedMovie}
+              deleteMovieFromSaved={deleteMovieFromSaved}
+          />
+      </Main>
+      <Footer />
+    </>
   );
 }
 

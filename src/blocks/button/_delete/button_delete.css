@@ -21,6 +21,9 @@
   background-color: #f9f9f9;
 }
 
+.button_delete:focus {
+  outline: none;
+}
 @media screen and (max-width: 400px) {
   .button_delete {
     top: 10px;

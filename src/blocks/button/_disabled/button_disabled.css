@@ -1,0 +1,9 @@
+.button_disabled {
+    background-color: var(--color-content-grey);
+    opacity: .3;
+}
+
+.button_disabled:hover {
+    cursor: auto;
+    opacity: .3;
+}

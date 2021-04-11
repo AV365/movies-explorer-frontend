@@ -1,0 +1,7 @@
+.footernav__links-items_style_disabled {
+
+    pointer-events: none; /* делаем элемент неактивным для взаимодействия */
+    cursor: default; /*  курсор в виде стрелки */
+    color: var(--color-content-grey);
+    opacity: .3;
+}

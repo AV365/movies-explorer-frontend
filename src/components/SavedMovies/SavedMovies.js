@@ -1,9 +1,46 @@
-function SavedMovies(props) {
-  return (
-    <>
-      <main className="main">{props.children}</main>
-    </>
-  );
+import { useState } from "react";
+import HeaderAuthorized from "../HeaderAuthorized/HeaderAuthorized";
+import SearchForm from "../SearchForm/SearchForm";
+import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import Footer from "../Footer/Footer";
+import Main from "../Main/Main";
+
+function SavedMovies({
+  handleSearchFilm,
+  moviesRender,
+  numCardsInRow,
+  moviesResultMessage,
+  handleSaveMovie,
+  isSavedMovie,
+  deleteMovieFromSaved,
+  handleFilterShortFilm,
+  savedMovies,
+}) {
+
+    return (
+      <>
+        <HeaderAuthorized />
+        <Main>
+          <SearchForm
+            handleSearchFilm={handleSearchFilm}
+            handleFilterShortFilm={handleFilterShortFilm}
+            isSavedMoves={true}
+          />
+          <MoviesCardList
+            movies={moviesRender}
+            savedMovies={savedMovies}
+            showSettings={numCardsInRow}
+            moviesResultMessage={moviesResultMessage}
+            onSaveMovie={handleSaveMovie}
+            isSavedMovie={isSavedMovie}
+            deleteMovieFromSaved={deleteMovieFromSaved}
+            isSavedMovies={true}
+          />
+        </Main>
+        <Footer />
+      </>
+    );
+
 }
 
 export default SavedMovies;

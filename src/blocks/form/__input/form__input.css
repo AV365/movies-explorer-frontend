@@ -18,6 +18,6 @@
 }
 
 .form__input:focus {
-
+background-color: none;
   border-bottom: 1px solid #3456F3;
 }
