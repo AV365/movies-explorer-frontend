@@ -9,9 +9,24 @@ export const register = (name, email, password) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ name, password, email }),
-  }).then((response) => {
-    return response;
-  });
+  })
+    .then((res) => {
+      if (
+        !res ||
+        res.status === 400 ||
+        res.status === 500 ||
+        res.status === 409
+      ) {
+        throw new Error(res);
+      }
+
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .catch((err) => {
+      return err;
+    });
 };
 
 export function getContent(jwt) {
@@ -21,9 +36,16 @@ export function getContent(jwt) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${jwt}`,
     },
-  }).then((response) => {
-    return response.json();
-  });
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => {});
 }
 
 export function login(email, password) {
@@ -33,7 +55,14 @@ export function login(email, password) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ password, email }),
-  }).then((response) => {
-    return response;
-  });
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => {});
 }

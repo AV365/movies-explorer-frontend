@@ -4,7 +4,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import Main from "../Main/Main";
-import {CurrentUserContext} from "../../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function SavedMovies({
   handleSearchFilm,
@@ -16,33 +16,34 @@ function SavedMovies({
   deleteMovieFromSaved,
   handleFilterShortFilm,
   savedMovies,
+  showPopup,
 }) {
-    const currentUser = useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
 
-    return (
-      <>
-        <HeaderAuthorized />
-        <Main>
-          <SearchForm
-            handleSearchFilm={handleSearchFilm}
-            handleFilterShortFilm={handleFilterShortFilm}
-            isSavedMoves={true}
-          />
-          <MoviesCardList
-            movies={moviesRender}
-            savedMovies={savedMovies}
-            showSettings={numCardsInRow}
-            moviesResultMessage={moviesResultMessage}
-            onSaveMovie={handleSaveMovie}
-            isSavedMovie={isSavedMovie}
-            deleteMovieFromSaved={deleteMovieFromSaved}
-            isSavedMovies={true}
-          />
-        </Main>
-        <Footer />
-      </>
-    );
-
+  return (
+    <>
+      <HeaderAuthorized />
+      <Main>
+        <SearchForm
+          handleSearchFilm={handleSearchFilm}
+          handleFilterShortFilm={handleFilterShortFilm}
+          isSavedMoves={true}
+          showPopup={showPopup}
+        />
+        <MoviesCardList
+          movies={moviesRender}
+          savedMovies={savedMovies}
+          showSettings={numCardsInRow}
+          moviesResultMessage={moviesResultMessage}
+          onSaveMovie={handleSaveMovie}
+          isSavedMovie={isSavedMovie}
+          deleteMovieFromSaved={deleteMovieFromSaved}
+          isSavedMovies={true}
+        />
+      </Main>
+      <Footer />
+    </>
+  );
 }
 
 export default SavedMovies;

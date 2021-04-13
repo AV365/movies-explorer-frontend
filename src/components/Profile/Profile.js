@@ -5,9 +5,10 @@ import validator from "validator";
 import Main from "../Main/Main";
 import HeaderAuthorized from "../HeaderAuthorized/HeaderAuthorized";
 
-function Profile({ onUpdateProfile, onSignout}) {
-
+function Profile({ onUpdateProfile, onSignout }) {
   const currentUser = useContext(CurrentUserContext);
+
+  const [formDisabled, setFormDisabled] = useState(false);
 
   const [profileName, setProfileName] = useState("");
   const [profileEmail, setProfileEmail] = useState("");
@@ -30,9 +31,23 @@ function Profile({ onUpdateProfile, onSignout}) {
       errorEmailMessage === "" &&
       userData.email !== "" &&
       userData.name.length >= 2 &&
-      userData.name.length <= 30
+      userData.name.length <= 30 &&
+      !isInitValues()
     ) {
       setButtonDisabled(false);
+    }
+  }
+
+  function isInitValues() {
+
+    if (
+      userData.email === currentUser.email &&
+      userData.name === currentUser.name
+    ) {
+
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -55,6 +70,10 @@ function Profile({ onUpdateProfile, onSignout}) {
     } else {
       setErrorNameMessage("");
     }
+
+    if (isInitValues()) {
+      setButtonDisabled(true);
+    }
   }
 
   useEffect(() => {
@@ -74,9 +93,9 @@ function Profile({ onUpdateProfile, onSignout}) {
   function handleSubmit() {
     let { name, email } = userData;
     if (validator.isEmail(email)) {
-      onUpdateProfile(name, email)
-        .then(() => {})
-        .catch(() => {});
+      setButtonDisabled(true);
+      setFormDisabled();
+      onUpdateProfile(name, email);
     }
   }
 
@@ -110,6 +129,7 @@ function Profile({ onUpdateProfile, onSignout}) {
                   placeholder="Имя пользователя"
                   onChange={handleChange}
                   value={userData.name}
+                  disabled={formDisabled}
                 />
               </label>
               <label className="form__group">
@@ -123,6 +143,7 @@ function Profile({ onUpdateProfile, onSignout}) {
                   name="email"
                   onChange={handleChange}
                   value={userData.email}
+                  disabled={formDisabled}
                 />
               </label>
             </fieldset>

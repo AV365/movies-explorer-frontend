@@ -1,4 +1,3 @@
-
 import React from "react";
 
 import { useState, useEffect } from "react";
@@ -15,6 +14,8 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 //Импортируем мозги
 import { _log, apiSettings } from "../../utils/utils";
+import { moviesFilterSettings } from "../../utils/moviesFilterSettings";
+
 import moviesapi from "../../utils/MoviesApi";
 import mainapi from "../../utils/MainApi";
 import * as auth from "../../utils/auth";
@@ -22,25 +23,13 @@ import * as auth from "../../utils/auth";
 //Импортируем верстку
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-import Header from "../Header/Header";
-import Main from "../Main/Main";
-import Footer from "../Footer/Footer";
-import Promo from "../Promo/Promo";
-import NavTab from "../NavTab/NavTab";
-import AboutProject from "../AboutProject/AboutProject";
-import Techs from "../Techs/Techs";
-import AboutMe from "../AboutMe/AboutMe";
-import Portfolio from "../Portfolio/Portfolio";
-
 import Movies from "../Movies/Movies";
-import HeaderAuthorized from "../HeaderAuthorized/HeaderAuthorized";
-import SearchForm from "../SearchForm/SearchForm";
+
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 import "./App.css";
 import { trackPromise } from "react-promise-tracker";
 
-import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
@@ -48,18 +37,23 @@ import NotFound from "../NotFound/NotFound";
 import Profile from "../Profile/Profile";
 import LandingPage from "../LandingPage/LandingPage";
 import { debug } from "prettier/doc";
+import Preloader from "../Preloader/Preloader";
 
 function App() {
   const history = useHistory();
   const location = useLocation();
 
+  //Настройки отображения карточек
   const getNumCardsInRow = (wScreen) => {
     if (wScreen >= 1280) {
-      return { def: 12, more: 3 };
+      return moviesFilterSettings.cardsSettings.forWideScreen;
     } else if (wScreen >= 768) {
-      return { def: 8, more: 2 };
-    } else return { def: 5, more: 2 };
+      return moviesFilterSettings.cardsSettings.forMiddleScreen;
+    } else return moviesFilterSettings.cardsSettings.forMobileScreen;
   };
+
+  const [isLoading, setIsLoading] = useState(false);
+
   //пользователь
   const [loggedIn, setLoggedIn] = useState(false);
   const [userData, setUserData] = useState({
@@ -109,13 +103,14 @@ function App() {
 
   function handleSignout() {
     localStorage.removeItem("jwt");
-    localStorage.removeItem('saved-movies');
+    localStorage.removeItem("saved-movies");
     setLoggedIn(false);
 
     history.push("/");
   }
 
   function getUser() {
+    setIsLoading(true);
     return mainapi
       .getUserInfo()
       .then((data) => {
@@ -125,7 +120,9 @@ function App() {
       })
       .catch((err) => {
         alert("Error:" + err);
-      });
+      }).finally((res)=> {
+          setIsLoading(false);
+        });
   }
 
   function checkToken() {
@@ -155,37 +152,42 @@ function App() {
   }
 
   function handleRegister(name, email, password) {
-
+    setIsLoading(true);
     return auth
       .register(name, email, password)
       .then((res) => {
-        if (
-          !res ||
-          res.status === 400 ||
-          res.status === 500 ||
-          res.status === 409
-        ) {
-          setRegisterMessage("Что-то пошло не так! Попробуйте ещё раз.");
-
-          throw new Error("Что-то пошло не так!");
-        }
-        if (res.ok) {
-          //          console.log("Что идет на вход", name, password);
-          //          console.log(res);
-          handleLogin(email, password)
-            .then(() => {})
-            .catch((err) => {
-              showPopup(true, false, err);
-            });
-          //          history.push("/movies");
-        }
+        // if (
+        //   !res ||
+        //   res.status === 400 ||
+        //   res.status === 500 ||
+        //   res.status === 409
+        // ) {
+        //   setRegisterMessage("Что-то пошло не так! Попробуйте ещё раз.");
+        //
+        //   throw new Error("Что-то пошло не так!");
+        // }
+        // if (res.ok) {
+        //          console.log("Что идет на вход", name, password);
+        //          console.log(res);
+        handleLogin(email, password)
+          .then(() => {})
+          .catch((err) => {
+            showPopup(true, false, err);
+          });
+        //          history.push("/movies");
+        // }
       })
       .catch((err) => {
+        setRegisterMessage("Что-то пошло не так! Попробуйте ещё раз.");
         return Promise.reject(err);
-      });
+      }).finally((res)=> {
+
+          setIsLoading(false);
+        });
   }
 
   function handleLogin(email, password) {
+    setIsLoading(true);
     return auth
       .login(email, password)
       .then((res) => {
@@ -193,7 +195,7 @@ function App() {
           setLoginMessage("Что-то пошло не так! Попробуйте ещё раз.");
           throw new Error("Ошибка авторизации");
         }
-        return res.json();
+        return res;
       })
       .then((res) => {
         setLoggedIn(true);
@@ -208,10 +210,12 @@ function App() {
       })
       .finally(() => {
         setPermissionsChecked(true);
+        setIsLoading(false);
       });
   }
 
   function handleUpdateUser(name, email) {
+    setIsLoading(true);
     return mainapi
       .updateUserInfo(name, email)
       .then((res) => {
@@ -220,6 +224,9 @@ function App() {
       })
       .catch((err) => {
         showPopup(true, false, "Что-то пошло не так, но не сдавайтесь!");
+      })
+      .finally((res) => {
+        setIsLoading(false);
       });
   }
 
@@ -240,7 +247,7 @@ function App() {
     nameRU,
     nameEN,
   }) => {
-    trackPromise(
+    setIsLoading(true);
     mainapi
       .saveMovie(
         country,
@@ -264,7 +271,10 @@ function App() {
       })
       .catch((err) => {
         showPopup(true, false);
-      }));
+      })
+      .finally((res) => {
+        setIsLoading(false);
+      });
   };
 
   //Задержка для ресайза
@@ -284,6 +294,7 @@ function App() {
 
   function getMovies(force = false) {
     if (!isLocalMovies("movies") || force) {
+      setIsLoading(true);
       moviesapi
         .getMovies()
         .then((data) => {
@@ -297,6 +308,9 @@ function App() {
         })
         .catch((err) => {
           showPopup(true, false);
+        })
+        .finally((res) => {
+          setIsLoading(false);
         });
     } else {
       // Берем данные из локального хранилища
@@ -344,7 +358,9 @@ function App() {
 
   function getSavedMoviesPromise(force = false) {
     return new Promise((resolve, reject) => {
+
       if (force || !isLocalMovies("saved-movies")) {
+        setIsLoading(true);
         return mainapi
           .getMovies()
           .then((data) => {
@@ -369,7 +385,9 @@ function App() {
           .catch((err) => {
             showPopup(true, false);
           })
-          .then((res) => {});
+          .finally((res)=> {
+            setIsLoading(false);
+          });
       }
       if (isLocalMovies("saved-movies")) {
         // Берем данные из локального хранилища
@@ -392,14 +410,15 @@ function App() {
   }
 
   function isSavedMovie(movieId) {
-    if (localStorage.getItem("saved-movies") != "undefined") {
+    if (
+      localStorage.getItem("saved-movies") !== "undefined" &&
+      localStorage.getItem("saved-movies") !== null
+    ) {
       const moviesLocalStorage = JSON.parse(
         localStorage.getItem("saved-movies")
       );
-
       let finded = 0;
       moviesLocalStorage.forEach((i) => {
-        //      console.log("iiii", i._id);
         if (i.movieId === movieId) {
           finded = i._id;
         }
@@ -412,6 +431,7 @@ function App() {
   }
   function deleteMovieFromSaved(id) {
     if (id) {
+      setIsLoading(true);
       return mainapi
         .deleteMovie(id)
         .then((data) => {
@@ -440,12 +460,16 @@ function App() {
         })
         .catch((err) => {
           showPopup(true, false);
-        });
+        }).finally((res) => {
+            setIsLoading(false);
+          });
     }
   }
 
   const filterMovies = (array, query = " ", shortFilm) => {
-    const durationForSearch = !shortFilm ? 99999 : 40;
+    const durationForSearch = !shortFilm
+      ? 99999
+      : moviesFilterSettings.durationShortMovies;
 
     let result = [];
     const filterStr = query.toString().toLowerCase();
@@ -582,6 +606,7 @@ function App() {
   }, [moviesShortFilter]);
 
   useEffect(() => {
+    setIsLoading(true);
     checkToken()
       .then(() => {
         getUser().then(() => {
@@ -602,6 +627,7 @@ function App() {
       .finally(() => {
         //        console.log("set permission");
         setPermissionsChecked(true);
+        setIsLoading(false);
       });
   }, [loggedIn]);
 
@@ -612,6 +638,7 @@ function App() {
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
+        {isLoading && <Preloader />}
         <InfoTooltip
           size="size_l"
           isOpened={isInfotooltipOpened}
@@ -644,6 +671,7 @@ function App() {
             isSavedMovie={isSavedMovie}
             deleteMovieFromSaved={deleteMovieFromSaved}
             handleFilterShortFilm={handleFilterShortFilm}
+            showPopup={showPopup}
           />
           {/*)}*/}
           {/*{loggedIn && (*/}
@@ -659,11 +687,12 @@ function App() {
             isSavedMovie={isSavedMovie}
             deleteMovieFromSaved={deleteMovieFromSaved}
             handleFilterShortFilm={handleFilterShortFilm}
+            showPopup={showPopup}
           />
           {/*)}*/}
           <Route exact path="/">
             {/*{loggedIn ? <Redirect to="/movies" /> : <LandingPage />}*/}
-            <LandingPage />
+            <LandingPage loggedIn={loggedIn} />
           </Route>
           <Route exact path="/signin">
             {loggedIn ? (

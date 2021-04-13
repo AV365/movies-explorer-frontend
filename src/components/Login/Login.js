@@ -10,6 +10,8 @@ function Login({ onLogin, loginMessage }) {
     password: "",
   });
 
+  const [formDisabled, setFormDisabled] = useState(false);
+
   const [errorEmailMessage, setErrorEmailMessage] = useState("");
   const [errorPasswordMessage, setErrorPasswordMessage] = useState("");
 
@@ -63,88 +65,93 @@ function Login({ onLogin, loginMessage }) {
   }
 
   function handleSubmit(e) {
-
     e.preventDefault();
     let { email, password } = userData;
     if (validator.isEmail(email) && password.length >= 8) {
-      onLogin(email, password)
-        .then(() => {})
-        .catch(() => {});
+      setButtonDisabled(true);
+      setFormDisabled();
+      onLogin(email, password);
+
     }
   }
 
   return (
     <>
       <Main fullframe="true">
-      <div className="main__container">
-        <form action="" className="form">
-          <a href="/">
-            <div className="logo"></div>
-          </a>
-          <h1 className="form__title">Рады видеть!</h1>
-          <fieldset className="form__set">
-            <label>
-              <span className={"form__label"}>E-mail</span>
-              <input
-                type="text"
-                className={
-                  "form__input " +
-                  (errorEmailMessage && "form__input_valid_false")
-                }
-                name="email"
-                required
-                onChange={handleChange}
-              />
-              <span
-                className={
-                  "form__error " +
-                  (errorEmailMessage && "form__error_visibility_visible")
-                }
-              >
-                {errorEmailMessage}
-              </span>
-            </label>
-            <label>
-              <span className={"form__label"}>Пароль</span>
-              <input
-                type="password"
-                className={
-                  "form__input " +
-                  (errorPasswordMessage && "form__input_valid_false")
-                }
-                name="password"
-                required
-                onChange={handleChange}
-              />
-              <span
-                className={
-                  "form__error " +
-                  (errorPasswordMessage && "form__error_visibility_visible")
-                }
-              >
-                {errorPasswordMessage}
-              </span>
-            </label>
-          </fieldset>
-
-        <div className="footernav">
-          {loginMessage && <p>{loginMessage}</p> }
-          <button
-            className={"button button_submit "  + (buttonDisabled && "button_disabled")}
-            onClick={handleSubmit}
-            disabled={buttonDisabled}
-          >
-            Войти
-          </button>
-          <p className="footernav__text">
-            Еще не зарегистрированы?&nbsp;&nbsp;
-            <a href="/signup" className="footernav__link">
-              Регистрация
+        <div className="main__container">
+          <form action="" className="form">
+            <a href="/">
+              <div className="logo"></div>
             </a>
-          </p>
+            <h1 className="form__title">Рады видеть!</h1>
+            <fieldset className="form__set">
+              <label>
+                <span className={"form__label"}>E-mail</span>
+                <input
+                  type="text"
+                  className={
+                    "form__input " +
+                    (errorEmailMessage && "form__input_valid_false")
+                  }
+                  name="email"
+                  required
+                  onChange={handleChange}
+                  disabled={formDisabled}
+                />
+                <span
+                  className={
+                    "form__error " +
+                    (errorEmailMessage && "form__error_visibility_visible")
+                  }
+                >
+                  {errorEmailMessage}
+                </span>
+              </label>
+              <label>
+                <span className={"form__label"}>Пароль</span>
+                <input
+                  type="password"
+                  className={
+                    "form__input " +
+                    (errorPasswordMessage && "form__input_valid_false")
+                  }
+                  name="password"
+                  required
+                  disabled={formDisabled}
+                  onChange={handleChange}
+                />
+                <span
+                  className={
+                    "form__error " +
+                    (errorPasswordMessage && "form__error_visibility_visible")
+                  }
+                >
+                  {errorPasswordMessage}
+                </span>
+              </label>
+            </fieldset>
+
+            <div className="footernav">
+              {loginMessage && <p>{loginMessage}</p>}
+              <button
+                className={
+                  "button button_submit " +
+                  (buttonDisabled && "button_disabled")
+                }
+                onClick={handleSubmit}
+                disabled={buttonDisabled}
+              >
+                Войти
+              </button>
+              <p className="footernav__text">
+                Еще не зарегистрированы?&nbsp;&nbsp;
+                <a href="/signup" className="footernav__link">
+                  Регистрация
+                </a>
+              </p>
+            </div>
+          </form>
         </div>
-        </form>
-      </div>
       </Main>
     </>
   );

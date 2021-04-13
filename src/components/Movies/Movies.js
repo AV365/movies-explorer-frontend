@@ -13,6 +13,7 @@ function Movies({
                     isSavedMovie,
                     deleteMovieFromSaved,
                     handleFilterShortFilm,
+                    showPopup={showPopup}
                 }) {
 
 
@@ -23,6 +24,7 @@ function Movies({
           <SearchForm
               handleSearchFilm={handleSearchFilm}
               handleFilterShortFilm={handleFilterShortFilm}
+              showPopup={showPopup}
           />
           <MoviesCardList
               movies={moviesRender}

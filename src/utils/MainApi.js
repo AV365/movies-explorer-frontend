@@ -13,9 +13,6 @@ class MainApi {
     }
 
     this.headers = config.headers;
-//    console.log(this.headers);
-
-    //this.headers = config.headers;
   }
 
   //обновляем информацию о пользователе
@@ -36,8 +33,10 @@ class MainApi {
       })
       .then((result) => {
         return result;
+      })
+      .catch((err) => {
+        //        this._displayErr(err);
       });
-    // .catch((err) => this._displayErr(err));
   }
 
   //Получаем информацию о пользователе
@@ -53,23 +52,23 @@ class MainApi {
         return result;
       })
       .catch((err) => {
-        //                    this._displayErr(err);
+        //        this._displayErr(err);
       });
   }
 
   //Забираем все карточки
   getMovies() {
-
     return fetch(`${this.url + "movies/"}`, { headers: this.headers })
       .then((res) => {
         if (res.ok) return res.json();
         return Promise.reject(`Ошибка получения карточек: ${res.status}`);
       })
       .then((result) => {
-
         return result;
       })
-     .catch((err) => this._displayErr(err));
+      .catch((err) => {
+        //        this._displayErr(err);
+      });
   }
 
   //Удаляем карточку
@@ -87,7 +86,9 @@ class MainApi {
       .then((result) => {
         return result;
       })
-    .catch((err) => this._displayErr(err));
+      .catch((err) => {
+        //        this._displayErr(err);
+      });
   }
 
   //Добавляем фильм в сохраненные
@@ -128,14 +129,15 @@ class MainApi {
       })
       .then((result) => {
         return result;
+      })
+      .catch((err) => {
+        //        this._displayErr(err);
       });
-    // .catch((err) => this._displayErr(err));
   }
 
   _displayErr(err) {
     // console.log(err);
   }
-
 }
 const mainapi = new MainApi({
   url: apiSettings.mainUrl,

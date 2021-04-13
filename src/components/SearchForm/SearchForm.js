@@ -6,20 +6,21 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 function SearchForm({
   handleSearchFilm,
   handleFilterShortFilm,
+    showPopup,
   isSavedMovies,
 }) {
   const [searchFilmQuery, setSearchFilmQuery] = useState("");
-  const [buttonDisabled, setButtonDisabled] = useState(true);
+  // const [buttonDisabled, setButtonDisabled] = useState(true);
 
-  function checkSearchForm() {
-    if (searchFilmQuery.length >= 2 && !isSavedMovies) {
-      setButtonDisabled(false);
-    }
-  }
+  // function checkSearchForm() {
+  //   if (searchFilmQuery.length >= 2 && !isSavedMovies) {
+  //     setButtonDisabled(false);
+  //   }
+  // }
 
-  useEffect(() => {
-    checkSearchForm();
-  }, [searchFilmQuery]);
+  // useEffect(() => {
+  //   checkSearchForm();
+  // }, [searchFilmQuery]);
 
   useEffect(()=> {
       handleSearchFilm(" ");
@@ -32,6 +33,9 @@ function SearchForm({
   function handleSubmit(e) {
     e.preventDefault();
 
+if (searchFilmQuery <=2) {
+  showPopup(true, false, "Нужно ввести ключевое слово. Строка поиска должна содержать минимум 2 символа.");
+}
     handleSearchFilm(searchFilmQuery);
   }
 
@@ -50,7 +54,6 @@ function SearchForm({
             type="submit"
             className="button button_search"
             onClick={handleSubmit}
-            disabled={buttonDisabled}
           />
           <FilterCheckbox handleFilterShortFilm={handleFilterShortFilm} />
         </form>

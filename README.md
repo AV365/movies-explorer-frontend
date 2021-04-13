@@ -2,4 +2,4 @@
 
 Ссылка на макет: https://www.figma.com/file/dhlBm39Nppbyvl2449q1gU/Diploma-(Copy)?node-id=891%3A3857
 
-Планируемый адрес сайта: www.movies-explorer.av365.ru
+Адрес сайта: www.movies-explorer.av365.ru

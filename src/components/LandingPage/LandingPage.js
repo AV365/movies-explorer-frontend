@@ -8,10 +8,10 @@ import AboutMe from "../AboutMe/AboutMe";
 import Portfolio from "../Portfolio/Portfolio";
 import Footer from "../Footer/Footer";
 
-function LandingPage() {
+function LandingPage({ loggedIn}) {
   return (
     <>
-      <Header />
+      <Header loggedIn={loggedIn}/>
       <Main>
         <Promo />
         <NavTab />

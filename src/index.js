@@ -7,18 +7,18 @@ import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 import Preloader from "./components/Preloader/Preloader";
 
- const LoadingIndicator = props => {
-       const { promiseInProgress } = usePromiseTracker();
-
-       return (
-           promiseInProgress && <Preloader/>
-       );
-     }
+ // const LoadingIndicator = props => {
+ //       const { promiseInProgress } = usePromiseTracker();
+ //
+ //       return (
+ //           promiseInProgress && <Preloader/>
+ //       );
+ //     }
 
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
-          <LoadingIndicator/>
+          {/*<LoadingIndicator/>*/}
           <App />
 
 
