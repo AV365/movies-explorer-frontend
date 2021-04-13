@@ -1,0 +1,11 @@
+.main__container_style_profile {
+  width: 410px;
+
+}
+
+@media screen and (max-width: 420px){
+    .main__container_style_profile {
+        width: 260px;
+
+    }
+}

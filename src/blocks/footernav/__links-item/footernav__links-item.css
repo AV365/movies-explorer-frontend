@@ -1,0 +1,37 @@
+.footernav__links-item {
+margin: 0 0 16px 0;
+
+    padding: 0;
+
+    font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.footernav__links-item :link {
+text-decoration: none;
+    color: var(--color-content-text);
+
+}
+.footernav__links-item :visited {
+    text-decoration: none;
+    color: var(--color-content-text);
+
+}
+
+.footernav__links-item :hover {
+    opacity: .8;
+
+}
+
+.footernav__links-item :focus {
+    outline: 0;
+
+}
+
+.footernav__links-item:last-child {
+
+    margin: 0;
+}

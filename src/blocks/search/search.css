@@ -1,0 +1,25 @@
+.search {
+  margin: 0 auto;
+
+  max-width: 1280px;
+  padding: 70px 70px 47px 70px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+
+  position: relative;
+}
+
+@media screen and (max-width: 768px) {
+  .search {
+    padding: 80px 30px 60px 30px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .search {
+    padding: 90px 14px 50px 14px;
+  }
+}

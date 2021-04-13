@@ -1,0 +1,45 @@
+.button_signin {
+    padding: 8px 20px;
+    margin: 0 0 0 30px;
+    height: 32px;
+    border-radius: 3px;
+display: inline-block;
+    background-color: var(--color-content-additional-second);
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+
+    box-sizing: border-box;
+
+
+}
+
+.button_signin:focus {
+    outline: none;
+}
+
+@media screen and (max-width: 320px) {
+    .button_signin {
+        font-size: 10px;
+        line-height: 16px;
+
+
+
+    }
+}
+
+.button_signin :link {
+    text-decoration: none;
+    color: var(--color-content-text);
+}
+.button_signin :visited {
+    text-decoration: none;
+    color: var(--color-content-text);
+}
+.button_signin :active {
+    text-decoration: none;
+    color: var(--color-content-text);
+}
+.button_signin :hover {
+    opacity: 0.8;
+}

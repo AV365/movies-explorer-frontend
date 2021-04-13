@@ -1,0 +1,30 @@
+.tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 90px);
+    column-gap: 10px;
+    row-gap: 10px;
+    max-width: 1280px;
+}
+
+
+@media screen and (max-width: 840px) {
+    .tabs {
+        grid-template-columns: repeat(auto-fit, 84px);
+    }
+}
+
+@media screen and (max-width: 690px) {
+    .tabs {
+        width: 367px;
+
+    }
+}
+@media screen and (max-width: 470px) {
+    .tabs {
+        width: 178px;
+
+    }
+}

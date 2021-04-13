@@ -1,0 +1,40 @@
+.navigation__link {
+  margin: 0 0 0 16px;
+  padding: 0;
+  display: inline;
+
+  font-family: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: right;
+}
+
+.navigation__link:first-child {
+  margin-left: 0;
+}
+
+.navigation__link :link {
+  text-decoration: none;
+  color: var(--color-content-bg);
+}
+.navigation__link :visited {
+  text-decoration: none;
+  color: var(--color-content-bg);
+}
+.navigation__link :active {
+  text-decoration: none;
+  color: var(--color-content-bg);
+}
+.navigation__link :hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 320px) {
+    .navigation__link {
+        font-size: 10px;
+        line-height: 16px;
+        margin: 0 0 0 14px;
+  }
+}

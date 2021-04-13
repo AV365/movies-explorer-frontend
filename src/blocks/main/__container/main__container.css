@@ -1,0 +1,27 @@
+.main__container {
+  width: 400px;
+  height: 100%;
+  position: fixed;
+  margin: auto auto;
+  padding: 70px 0 70px 0;
+  box-sizing: border-box;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .main__container {
+    height: 560px;
+    padding-top: 0;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .main__container {
+    width: 320px;
+    height: auto;
+    padding: 56px 0 0 0;
+  }
+}

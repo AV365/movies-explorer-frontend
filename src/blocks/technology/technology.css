@@ -1,0 +1,27 @@
+.technology {
+  display: flex;
+  justify-content: center;
+  background-color: var(--color-content-grey-third);
+  padding: 100px 70px 90px 70px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+  .technology {
+    padding: 90px 50px 80px 50px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .technology {
+    padding: 70px 30px 60px 30px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .technology {
+    padding: 70px 18px 60px 18px;
+    background-color: var(--color-content-bg);
+  }
+}

@@ -1,0 +1,26 @@
+.about__header {
+  padding: 0;
+  margin: 0 0 26px 0;
+
+  font-family: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+}
+
+@media screen and (max-width: 760px) {
+  .about__header {
+    margin: 0 0 22px 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .about__header {
+    margin: 0 0 16px 0;
+
+    font-size: 18px;
+    line-height: 22px;
+  }
+}

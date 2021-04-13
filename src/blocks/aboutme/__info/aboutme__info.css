@@ -1,0 +1,26 @@
+.aboutme__info {
+  font-family: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+
+  margin: 0 0 26px 0;
+  padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .aboutme__info {
+    margin: 0 0 20px 0;
+
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .aboutme__info {
+    font-size: 11px;
+    line-height: 16px;
+  }
+}

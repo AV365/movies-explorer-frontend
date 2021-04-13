@@ -1,0 +1,9 @@
+.timeline__item_size_80 {
+  width: 80%;
+}
+
+@media screen and (max-width: 600px) {
+  .timeline__item_size_80 {
+    width: 66%;
+  }
+}

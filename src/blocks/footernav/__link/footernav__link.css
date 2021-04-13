@@ -1,0 +1,23 @@
+.footernav__link {
+
+    color: var(--color-content-additional-third);
+}
+
+.footernav__link:link {
+
+    color: var(--color-content-additional-third);
+    text-decoration: none;
+}
+
+.footernav__link:visited {
+
+    color: var(--color-content-additional-third);
+    text-decoration: none;
+}
+
+.footernav__link:hover {
+
+    color: var(--color-content-additional-third);
+    text-decoration: none;
+    opacity: 0.8;
+}

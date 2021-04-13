@@ -1,0 +1,10 @@
+.button {
+  font-family: "Inter", "Helvetica Neue", "Arial", sans-serif;
+
+  border: 0;
+}
+
+.button:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}

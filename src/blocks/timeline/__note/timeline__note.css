@@ -1,0 +1,27 @@
+.timeline__note {
+    margin: 0;
+    padding: 14px 0 0 0;
+
+    font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+
+    color: var(--color-content-grey);
+
+
+}
+
+
+@media screen and (max-width: 400px){
+
+    .timeline__note {
+        padding: 10px 0 0 0;
+
+        font-size: 11px;
+        line-height: 13px;
+    }
+
+}

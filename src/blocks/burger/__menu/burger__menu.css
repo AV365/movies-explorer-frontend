@@ -1,0 +1,28 @@
+#burger__menu {
+  position: fixed;
+  width: 500px;
+  height: 100%;
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+
+  text-align: center;
+  top: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 159px 50px 50px 50px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+  list-style-type: none;
+  z-index: 9999;
+  opacity: 100%;
+}
+
+@media screen and (max-width: 420px) {
+  #burger__menu {
+    width: 100%;
+    padding-top: 144px;
+  }
+}

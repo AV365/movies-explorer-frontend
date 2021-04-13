@@ -1,0 +1,10 @@
+.form__group {
+  position: relative;
+  display: block;
+  border-bottom: 1px solid #e8e8e8;
+  margin: 0 0 16px 0;
+}
+
+.form__group:last-of-type {
+  border: 0;
+}

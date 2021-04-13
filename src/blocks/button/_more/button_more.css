@@ -1,0 +1,7 @@
+.button_more {
+  margin-bottom: 80px;
+}
+
+.button_more:focus {
+    outline: none;
+}

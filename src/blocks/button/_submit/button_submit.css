@@ -1,0 +1,28 @@
+.button_submit {
+  width: 396px;
+    height: 45px;
+  margin: 0;
+  padding: 13px 0 15px 0;
+  box-sizing: border-box;
+
+  font-family: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+
+  text-align: center;
+  border-radius: 3px;
+
+  background-color: var(--color-content-additional-third);
+  color: var(--color-content-bg);
+}
+
+
+@media screen and (max-width: 420px){
+  .button_submit {
+    width: 260px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

@@ -1,0 +1,18 @@
+.card__duration {
+  height: 18px;
+  min-width: 52px;
+  margin: 0;
+  padding: 4px 7px;
+  box-sizing: border-box;
+  border-radius: 3px;
+
+  background-color: #f9f9f9;
+
+  font-family: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 100;
+  line-height: 10px;
+  letter-spacing: 0;
+  text-align: center;
+}

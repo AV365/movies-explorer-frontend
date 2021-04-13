@@ -1,0 +1,22 @@
+.timeline__step {
+  margin: 0;
+  padding: 9px 14px;
+  box-sizing: border-box;
+
+  font-family: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+
+  text-align: center;
+}
+
+@media screen and (max-width: 400px) {
+  .timeline__step {
+    padding: 11px 10px;
+
+    font-size: 11px;
+    line-height: 13px;
+  }
+}

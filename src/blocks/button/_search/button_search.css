@@ -1,0 +1,35 @@
+.button_search {
+  width: 34px;
+  height: 34px;
+
+  background-color: var(--color-content-additional-third);
+  background-image: url("../../../images/ico_search.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  border-radius: 50%;
+
+  border: 0;
+
+  position: absolute;
+  top: 70px;
+  right: 70px;
+}
+
+.button_search:focus {
+  outline: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .button_search {
+    top: 80px;
+    right: 30px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+    .button_search {
+        top: 84px;
+        right: 14px;
+    }
+}

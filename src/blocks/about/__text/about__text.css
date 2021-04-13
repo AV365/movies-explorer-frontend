@@ -1,0 +1,24 @@
+.about__text {
+  margin: 0;
+  padding: 0;
+
+  font-family: "Inter", "Helvetica Neue", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+@media screen and (max-width: 400px) {
+  .about__text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .about__text {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}

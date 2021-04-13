@@ -1,0 +1,19 @@
+.footernav__links-items_style_highlighted {
+  color: #ff3055;
+}
+
+.footernav__links-items_style_highlighted :link {
+  color: #ff3055;
+}
+
+.footernav__links-items_style_highlighted :visited {
+  color: #ff3055;
+}
+
+.footernav__links-items_style_highlighted :active {
+  color: #ff3055;
+}
+
+.footernav__links-items_style_highlighted :hover {
+  opacity: 0.8;
+}

@@ -1,0 +1,21 @@
+.footernav {
+  position: absolute;
+  bottom: 70px;
+  width: 100%;
+  margin: 16px auto 0 auto;
+  text-align: center;
+
+
+}
+
+@media screen and (max-width: 768px) {
+  .footernav {
+    bottom: 0;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .footernav {
+    bottom: 30px;
+  }
+}
